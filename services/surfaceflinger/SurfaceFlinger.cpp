@@ -933,6 +933,8 @@ static const char* blurAlgorithmToPropertyToken(renderengine::RenderEngine::Blur
             return "kawase_darkmoon";
         case BA::Glass:
             return "glass";
+        case BA::Pyramid:
+            return "pyramid";
         case BA::None:
         default:
             return nullptr;
@@ -972,6 +974,8 @@ renderengine::RenderEngine::BlurAlgorithm chooseBlurAlgorithm(bool supportsBlur)
         chosen = renderengine::RenderEngine::BlurAlgorithm::KawaseDarkmoon;
     } else if (algorithm == "glass") {
         chosen = renderengine::RenderEngine::BlurAlgorithm::Glass;
+    } else if (algorithm == "pyramid") {
+        chosen = renderengine::RenderEngine::BlurAlgorithm::Pyramid;
     } else {
         if (FlagManager::getInstance().window_blur_kawase2()) {
             if (FlagManager::getInstance().window_blur_kawase2_fix_aliasing()) {
