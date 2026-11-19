@@ -193,7 +193,7 @@ status_t layer_state_t::write(Parcel& output) const
 
     SAFE_PARCEL(output.writeUint32, blurRegions.size());
     for (auto region : blurRegions) {
-        SAFE_PARCEL(output.writeUint32, region.blurRadius);
+        SAFE_PARCEL(output.writeUint32, region.radiusForParcel());
         SAFE_PARCEL(output.writeFloat, region.cornerRadiusTL);
         SAFE_PARCEL(output.writeFloat, region.cornerRadiusTR);
         SAFE_PARCEL(output.writeFloat, region.cornerRadiusBL);
@@ -354,7 +354,9 @@ status_t layer_state_t::read(const Parcel& input)
     blurRegions.clear();
     for (uint32_t i = 0; i < numRegions; i++) {
         BlurRegion region;
-        SAFE_PARCEL(input.readUint32, &region.blurRadius);
+        uint32_t packedRadius;
+        SAFE_PARCEL(input.readUint32, &packedRadius);
+        region.readRadiusFromParcel(packedRadius);
         SAFE_PARCEL(input.readFloat, &region.cornerRadiusTL);
         SAFE_PARCEL(input.readFloat, &region.cornerRadiusTR);
         SAFE_PARCEL(input.readFloat, &region.cornerRadiusBL);
